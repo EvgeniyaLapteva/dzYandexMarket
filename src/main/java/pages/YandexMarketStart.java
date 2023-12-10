@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
@@ -23,8 +24,9 @@ public class YandexMarketStart {
     }
 
     public void goToCatalog() {
-        wait.until(visibilityOfElementLocated(By.xpath("//div[@data-zone-name='catalog']//button")));
-        catalogButton = driver.findElement(By.xpath("//div[@data-zone-name='catalog']//button"));
+        wait.until(visibilityOfElementLocated(By.xpath("//div[@data-zone-name='catalog']")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@data-zone-name='catalog']")));
+        catalogButton = driver.findElement(By.xpath("//div[@data-zone-name='catalog']"));
         catalogButton.click();
     }
 

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.util.concurrent.TimeUnit;
 
 public class BaseTests {
 
@@ -14,10 +14,16 @@ public class BaseTests {
     @BeforeEach
     public void before(){
         System.setProperty("webdriver.chrome.driver",System.getenv("CHROME_DRIVER"));
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "none");
-        chromeDriver = new ChromeDriver(capabilities);
+//        DesiredCapabilities capabilities = new DesiredCapabilities();
+//        capabilities.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "none");
+//        chromeDriver = new ChromeDriver(capabilities);
+//        chromeDriver.manage().window().maximize();
+
+        chromeDriver=new ChromeDriver();
         chromeDriver.manage().window().maximize();
+        chromeDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        chromeDriver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+        chromeDriver.manage().timeouts().setScriptTimeout(15, TimeUnit.SECONDS);
     }
 
     @AfterEach

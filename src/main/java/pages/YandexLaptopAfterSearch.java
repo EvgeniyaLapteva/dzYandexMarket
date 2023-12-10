@@ -32,11 +32,15 @@ public class YandexLaptopAfterSearch {
 
     private String selectorPaginationButton = "//div[@data-auto='pagination-page']";
 
+//    private String selectorPreviousPage = "//span[contains(text(), 'Назад')]";
+
     private WebElement resultsOfSearch;
 
     private List<Map<String, String>> collectResults = new ArrayList<>();
 
     private List<Map<String, String>> exceptedItems = new ArrayList<>();
+
+    private int page = 1;
 
     public YandexLaptopAfterSearch(WebDriver driver) {
         this.driver = driver;
@@ -47,7 +51,7 @@ public class YandexLaptopAfterSearch {
         return collectResults;
     }
 
-    public void scrollToTheEndOfPage() {
+    public void scrollToTheEndOfFirstPage() {
         wait.until(visibilityOfElementLocated(By.xpath(selectorPaginationButton)));
         wait.until(visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Показать ещё')]")));
         WebElement lastElement =
@@ -57,19 +61,12 @@ public class YandexLaptopAfterSearch {
         js.executeScript("window.scrollTo(0,"+y+")");
     }
 
-    public void putItemsToCollectResults() throws InterruptedException {
-         // wait.until(visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Показать ещё')]")));
-//        WebElement lastElement =
-//                driver.findElement(By.xpath("//span[contains(text(), 'Показать ещё')]"));
-//        int y = lastElement.getLocation().getY();
-//        JavascriptExecutor js = (JavascriptExecutor)driver;
-//        js.executeScript("window.scrollTo(0,"+y+")");
-//
-        wait.until(visibilityOfElementLocated(By.xpath(selectorPaginationButton)));
-        Thread.sleep(5000);
+    public void putItemsToCollectResults() {
+
         wait.until(visibilityOfElementLocated(By.xpath(selectorResults)));
         wait.until(visibilityOfElementLocated(By.xpath(selectorProducer)));
         wait.until(visibilityOfElementLocated(By.xpath(selectorPrice)));
+        wait.until(visibilityOfElementLocated(By.xpath(selectorPaginationButton)));
 
         resultsOfSearch = driver.findElement(By.xpath(selectorResults));
 
@@ -91,29 +88,47 @@ public class YandexLaptopAfterSearch {
     public void addTheRestResultsToFirstPage() throws InterruptedException {
         while (driver.findElements(By.xpath(selectorNextButton)).size() != 0) {
             driver.findElement(By.xpath(selectorNextButton)).click();
-            wait.until(visibilityOfElementLocated(By.xpath(selectorPaginationButton)));
-            WebElement lastElement =
-                    driver.findElement(By.xpath(selectorPaginationButton));
-            int y = lastElement.getLocation().getY();
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollTo(0," + y + ")");
+            scrollToThePointOnThePage(selectorPaginationButton);
+            Thread.sleep(3000);
             putItemsToCollectResults();
         }
     }
 
-    public void checkIfResultContainRightProducers(String first, String second, String from, String to) {
+    public void checkIfResultContainRightProducersAndPrices(String first, String second, String from, String to) {
         for (Map<String, String> map : collectResults) {
             String productName = map.keySet().iterator().next();
             String priceString = map.get(productName).replaceAll("[^0-9]", "");
             int price = Integer.parseInt(priceString);
 
-            if (!(productName.contains(first) || productName.contains(second)) || price < Integer.parseInt(from)
+            if (!(productName.toLowerCase().contains(first.toLowerCase())
+                    || productName.toLowerCase().contains(second.toLowerCase())) || price < Integer.parseInt(from)
                     || price > Integer.parseInt(to)) {
                 exceptedItems.add(map);
             }
         }
-        for (Map<String, String> invalidElement : exceptedItems) {
-            System.out.println(invalidElement);
+        if (exceptedItems.size() != 0) {
+            System.out.println("Не все предложения соответствуют фильтру: ");
+            for (Map<String, String> invalidElement : exceptedItems) {
+                System.out.println(invalidElement);
+            }
         }
     }
+
+    public void searchResultsByNameOfFirstItem() {
+        System.out.println(getNameOfFirstItem());
+    }
+
+    private String getNameOfFirstItem() {
+        return collectResults.get(0).keySet().iterator().next();
+    }
+
+    private void scrollToThePointOnThePage(String point) {
+        wait.until(visibilityOfElementLocated(By.xpath(point)));
+        WebElement lastElement =
+                driver.findElement(By.xpath(point));
+        int y = lastElement.getLocation().getY();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0," + y + ")");
+    }
+
 }

@@ -25,14 +25,15 @@ public class YandexMarketTests extends BaseTests {
         yandexLaptopBeforeSearch.setPrices(priceFrom, priceTo);
         yandexLaptopBeforeSearch.setProducer(firstProducer, secondProducer);
         YandexLaptopAfterSearch yandexLaptopAfterSearch = new YandexLaptopAfterSearch(chromeDriver);
-        yandexLaptopAfterSearch.scrollToTheEndOfPage();
+        yandexLaptopAfterSearch.scrollToTheEndOfFirstPage();
         yandexLaptopAfterSearch.putItemsToCollectResults();
         System.out.println(yandexLaptopAfterSearch.getCollectResults().size());
         System.out.println(yandexLaptopAfterSearch.getCollectResults());
         yandexLaptopAfterSearch.checkThatFirstPageContainsMoreThan12Elements();
         yandexLaptopAfterSearch.addTheRestResultsToFirstPage();
         System.out.println(yandexLaptopAfterSearch.getCollectResults().size());
-
-        yandexLaptopAfterSearch.checkIfResultContainRightProducers(firstProducer, secondProducer, priceFrom, priceTo);
+        yandexLaptopAfterSearch.checkIfResultContainRightProducersAndPrices(firstProducer, secondProducer, priceFrom,
+                priceTo);
+        yandexLaptopAfterSearch.searchResultsByNameOfFirstItem();
     }
 }
