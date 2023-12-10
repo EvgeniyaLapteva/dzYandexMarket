@@ -16,6 +16,14 @@ public class YandexLaptopBeforeSearch {
 
     private WebDriverWait wait;
 
+    private String selectorOfTitle = "//h1";
+
+    private String selectorPriceFrom =
+            "//div[@data-auto='filter-range-glprice']//span[@data-auto='filter-range-min']//input[@type='text']";
+
+    private String selectorPriceTo =
+            "//div[@data-auto='filter-range-glprice']//span[@data-auto='filter-range-max']//input[@type='text']";
+
     private WebElement titleOfSection;
 
     private WebElement searchPriceFrom;
@@ -26,34 +34,25 @@ public class YandexLaptopBeforeSearch {
 
     private WebElement producerLenovo;
 
-
-    public WebDriver getWebDriver() {
-        return driver;
-    }
-
     public YandexLaptopBeforeSearch(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, 10);
     }
 
     public void checkIfItLaptopsSection(String title) {
-        wait.until(visibilityOfElementLocated(By.xpath("//h1")));
-        titleOfSection = driver.findElement(By.xpath("//h1"));
+        wait.until(visibilityOfElementLocated(By.xpath(selectorOfTitle)));
+        titleOfSection = driver.findElement(By.xpath(selectorOfTitle));
         Assertions.assertTrue(titleOfSection.getText().contains(title),
                 "Раздел не содержит текста " + titleOfSection);
     }
 
     public void setPrices(String from, String to) {
-        wait.until(visibilityOfElementLocated(By.xpath(
-                "//div[@data-auto='filter-range-glprice']//span[@data-auto='filter-range-min']//input[@type='text']")));
-        wait.until(visibilityOfElementLocated(By.xpath(
-                "//div[@data-auto='filter-range-glprice']//span[@data-auto='filter-range-max']//input[@type='text']")));
-        searchPriceFrom = driver.findElement(By.xpath(
-                "//div[@data-auto='filter-range-glprice']//span[@data-auto='filter-range-min']//input[@type='text']"));
+        wait.until(visibilityOfElementLocated(By.xpath(selectorPriceFrom)));
+        wait.until(visibilityOfElementLocated(By.xpath(selectorPriceTo)));
+        searchPriceFrom = driver.findElement(By.xpath(selectorPriceFrom));
         searchPriceFrom.click();
         searchPriceFrom.sendKeys(from);
-        searchPriceTo = driver.findElement(By.xpath(
-                "//div[@data-auto='filter-range-glprice']//span[@data-auto='filter-range-max']//input[@type='text']"));
+        searchPriceTo = driver.findElement(By.xpath(selectorPriceTo));
         searchPriceTo.click();
         searchPriceTo.sendKeys(to);
     }

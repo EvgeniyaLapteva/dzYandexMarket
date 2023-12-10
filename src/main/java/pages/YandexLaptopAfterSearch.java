@@ -32,7 +32,7 @@ public class YandexLaptopAfterSearch {
 
     private String selectorPaginationButton = "//div[@data-auto='pagination-page']";
 
-    private String selectorSearchField = "//input[@id='header-search']";
+    private String selectorSearchField = "//input[@placeholder='Искать товары']";
 
     private String selectorSearchButton = "//button[@data-auto='search-button']";
 

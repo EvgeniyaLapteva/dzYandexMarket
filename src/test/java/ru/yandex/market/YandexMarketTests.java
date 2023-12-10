@@ -3,6 +3,7 @@ package ru.yandex.market;
 import io.qameta.allure.Feature;
 import pages.YandexLaptopAfterSearch;
 import pages.YandexLaptopBeforeSearch;
+import pages.YandexMarketFinalSearch;
 import pages.YandexMarketStart;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,5 +37,8 @@ public class YandexMarketTests extends BaseTests {
                 priceTo);
         yandexLaptopAfterSearch.searchResultsByNameOfFirstItem();
         yandexLaptopAfterSearch.searchByFirstElement();
+        YandexMarketFinalSearch finalSearch = new YandexMarketFinalSearch(chromeDriver);
+        finalSearch.checkIfFirstPageContainsExactItem(
+                yandexLaptopAfterSearch.getCollectResults().get(0).keySet().iterator().next());
     }
 }

@@ -14,11 +14,6 @@ public class BaseTests {
     @BeforeEach
     public void before(){
         System.setProperty("webdriver.chrome.driver",System.getenv("CHROME_DRIVER"));
-//        DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "none");
-//        chromeDriver = new ChromeDriver(capabilities);
-//        chromeDriver.manage().window().maximize();
-
         chromeDriver=new ChromeDriver();
         chromeDriver.manage().window().maximize();
         chromeDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
