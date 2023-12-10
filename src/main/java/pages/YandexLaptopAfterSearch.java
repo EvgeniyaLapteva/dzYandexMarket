@@ -32,15 +32,15 @@ public class YandexLaptopAfterSearch {
 
     private String selectorPaginationButton = "//div[@data-auto='pagination-page']";
 
-//    private String selectorPreviousPage = "//span[contains(text(), 'Назад')]";
+    private String selectorSearchField = "//input[@id='header-search']";
+
+    private String selectorSearchButton = "//button[@data-auto='search-button']";
 
     private WebElement resultsOfSearch;
 
     private List<Map<String, String>> collectResults = new ArrayList<>();
 
     private List<Map<String, String>> exceptedItems = new ArrayList<>();
-
-    private int page = 1;
 
     public YandexLaptopAfterSearch(WebDriver driver) {
         this.driver = driver;
@@ -53,9 +53,9 @@ public class YandexLaptopAfterSearch {
 
     public void scrollToTheEndOfFirstPage() {
         wait.until(visibilityOfElementLocated(By.xpath(selectorPaginationButton)));
-        wait.until(visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Показать ещё')]")));
+        wait.until(visibilityOfElementLocated(By.xpath(selectorShowMore)));
         WebElement lastElement =
-                driver.findElement(By.xpath("//span[contains(text(), 'Показать ещё')]"));
+                driver.findElement(By.xpath(selectorShowMore));
         int y = lastElement.getLocation().getY();
         JavascriptExecutor js = (JavascriptExecutor)driver;
         js.executeScript("window.scrollTo(0,"+y+")");
@@ -114,6 +114,16 @@ public class YandexLaptopAfterSearch {
         }
     }
 
+    public void searchByFirstElement() {
+        wait.until(visibilityOfElementLocated(By.xpath(selectorSearchField)));
+        scrollToThePointOnThePage(selectorSearchField);
+        WebElement searchButton = driver.findElement(By.xpath(selectorSearchField));
+        searchButton.click();
+        searchButton.sendKeys(getNameOfFirstItem());
+        wait.until(visibilityOfElementLocated(By.xpath(selectorSearchButton)));
+        driver.findElement(By.xpath(selectorSearchButton)).click();
+
+    }
     public void searchResultsByNameOfFirstItem() {
         System.out.println(getNameOfFirstItem());
     }

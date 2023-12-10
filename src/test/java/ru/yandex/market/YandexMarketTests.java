@@ -35,5 +35,6 @@ public class YandexMarketTests extends BaseTests {
         yandexLaptopAfterSearch.checkIfResultContainRightProducersAndPrices(firstProducer, secondProducer, priceFrom,
                 priceTo);
         yandexLaptopAfterSearch.searchResultsByNameOfFirstItem();
+        yandexLaptopAfterSearch.searchByFirstElement();
     }
 }
