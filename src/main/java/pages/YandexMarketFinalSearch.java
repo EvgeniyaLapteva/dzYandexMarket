@@ -47,6 +47,9 @@ public class YandexMarketFinalSearch {
         }
 
         boolean isFirstPageContainsItem = resultsFromFirstPage.contains(item);
+        for (String str : resultsFromFirstPage) {
+            System.out.println(str);
+        }
 
         Assertions.assertTrue(isFirstPageContainsItem, "После поиска по запросу " + item + " первая страница " +
                 "не содержит искомых результатов");

@@ -14,6 +14,12 @@ public class YandexMarketStart {
 
     private WebDriverWait wait;
 
+    private String selectorCatalogButton = "//div[@data-zone-name='catalog']";
+
+    private String selectorLaptopsSection = "//span[text()='Ноутбуки и компьютеры']";
+
+    private String selectorLaptopChoice = "//a[text()='Ноутбуки']";
+
     private WebElement catalogButton;
 
     private WebElement laptopsField;
@@ -24,16 +30,16 @@ public class YandexMarketStart {
     }
 
     public void goToCatalog() {
-        wait.until(visibilityOfElementLocated(By.xpath("//div[@data-zone-name='catalog']")));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@data-zone-name='catalog']")));
-        catalogButton = driver.findElement(By.xpath("//div[@data-zone-name='catalog']"));
+        wait.until(visibilityOfElementLocated(By.xpath(selectorCatalogButton)));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(selectorCatalogButton)));
+        catalogButton = driver.findElement(By.xpath(selectorCatalogButton));
         catalogButton.click();
     }
 
     public void goToLaptopsPage() {
-        wait.until(visibilityOfElementLocated(By.xpath("//span[text()='Ноутбуки и компьютеры']")));
-        laptopsField = driver.findElement(By.xpath("//span[text()='Ноутбуки и компьютеры']"));
-        WebElement field = driver.findElement(By.xpath("//a[text()='Ноутбуки']"));
+        wait.until(visibilityOfElementLocated(By.xpath(selectorLaptopsSection)));
+        laptopsField = driver.findElement(By.xpath(selectorLaptopsSection));
+        WebElement field = driver.findElement(By.xpath(selectorLaptopChoice));
         field.click();
     }
 }

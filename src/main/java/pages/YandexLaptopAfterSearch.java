@@ -80,8 +80,8 @@ public class YandexLaptopAfterSearch {
         }
     }
 
-    public void checkThatFirstPageContainsMoreThan12Elements() {
-        Assertions.assertTrue(getCollectResults().size() > 12, "The result of the search contains of " +
+    public void checkThatFirstPageContainsMoreThanExactElements(int count) {
+        Assertions.assertTrue(getCollectResults().size() > count, "The result of the search contains of " +
                 getCollectResults().size() + " elements. It is less than 12");
     }
 
@@ -123,9 +123,6 @@ public class YandexLaptopAfterSearch {
         wait.until(visibilityOfElementLocated(By.xpath(selectorSearchButton)));
         driver.findElement(By.xpath(selectorSearchButton)).click();
 
-    }
-    public void searchResultsByNameOfFirstItem() {
-        System.out.println(getNameOfFirstItem());
     }
 
     private String getNameOfFirstItem() {
