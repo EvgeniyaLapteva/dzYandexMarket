@@ -1,6 +1,6 @@
 package pages;
 
-import org.junit.jupiter.api.Assertions;
+import helpers.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,7 +43,7 @@ public class YandexLaptopBeforeSearch {
         wait.until(visibilityOfElementLocated(By.xpath(selectorOfTitle)));
         titleOfSection = driver.findElement(By.xpath(selectorOfTitle));
         Assertions.assertTrue(titleOfSection.getText().contains(title),
-                "Раздел не содержит текста " + titleOfSection);
+                "Раздел не содержит текста " + titleOfSection.getText());
     }
 
     public void setPrices(String from, String to) {

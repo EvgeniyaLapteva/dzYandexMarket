@@ -1,6 +1,6 @@
 package pages;
 
-import org.junit.jupiter.api.Assertions;
+import helpers.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,9 +47,6 @@ public class YandexMarketFinalSearch {
         }
 
         boolean isFirstPageContainsItem = resultsFromFirstPage.contains(item);
-        for (String str : resultsFromFirstPage) {
-            System.out.println(str);
-        }
 
         Assertions.assertTrue(isFirstPageContainsItem, "После поиска по запросу " + item + " первая страница " +
                 "не содержит искомых результатов");

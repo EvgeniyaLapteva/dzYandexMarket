@@ -1,6 +1,6 @@
 package pages;
 
-import org.junit.jupiter.api.Assertions;
+import helpers.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -82,7 +82,7 @@ public class YandexLaptopAfterSearch {
 
     public void checkThatFirstPageContainsMoreThanExactElements(int count) {
         Assertions.assertTrue(getCollectResults().size() > count, "The result of the search contains of " +
-                getCollectResults().size() + " elements. It is less than 12");
+                getCollectResults().size() + " elements.");
     }
 
     public void addTheRestResultsToFirstPage() throws InterruptedException {

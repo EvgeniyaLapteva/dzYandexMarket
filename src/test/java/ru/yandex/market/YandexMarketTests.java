@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static steps.StepsAll.*;
 
+import static helpers.Properties.testProperties;
+
 public class YandexMarketTests extends BaseTests {
 
     @Feature("Тест Яндекс Маркета")
@@ -19,7 +21,7 @@ public class YandexMarketTests extends BaseTests {
     @MethodSource("helpers.DataProvider#providerCheckingLaptops")
     public void testYandexMarket(String titleOfSection, String priceFrom, String priceTo, String firstProducer,
                                  String secondProducer, int count) throws InterruptedException {
-        chromeDriver.get("https://market.yandex.ru/");
+        chromeDriver.get(testProperties.yandexMarketUrl());
         YandexMarketStart yandexMarketStart = new YandexMarketStart(chromeDriver);
         yandexMarketStart.goToCatalog();
         yandexMarketStart.goToLaptopsPage();
@@ -49,7 +51,7 @@ public class YandexMarketTests extends BaseTests {
     @MethodSource("helpers.DataProvider#providerCheckingLaptops")
     public void testYandexMarketStepsAll(String titleOfSection, String priceFrom, String priceTo, String firstProducer,
                                  String secondProducer, int count) throws InterruptedException {
-        openSite("https://market.yandex.ru/", chromeDriver);
+        openSite(testProperties.yandexMarketUrl(), chromeDriver);
         goToLaptopsPage();
         checkSection(titleOfSection);
         setPricesAndProducers(priceFrom, priceTo, firstProducer, secondProducer);
