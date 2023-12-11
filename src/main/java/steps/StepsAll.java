@@ -46,7 +46,7 @@ public class StepsAll {
     }
 
     @Step("Проверяем, что на первой странице более {count} элементов")
-    public static void checkIfElementsEnough(int count) {
+    public static void checkIfElementsEnough(int count) throws InterruptedException {
         yandexLaptopAfterSearch = new YandexLaptopAfterSearch(driver);
         yandexLaptopAfterSearch.scrollToTheEndOfFirstPage();
         yandexLaptopAfterSearch.putItemsToCollectResults();
